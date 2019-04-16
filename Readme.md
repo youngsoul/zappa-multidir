@@ -8,15 +8,11 @@ Repo to show how to break up zappa code and settings across directories with a z
 
 ## Comp1 build
 
-`cd comp1`
-
 `zappa deploy comp1`
 
 `zappa undeploy -f comp1`
 
 ## Comp2 build
-
-`cd comp2`
 
 `zappa deploy comp2`
 
@@ -24,17 +20,13 @@ Repo to show how to break up zappa code and settings across directories with a z
 
 ## Tricky part
 
-The includes when building from an IDE are pathed differently AFAIK.
+make sure to exclude the directories you do not want to include for each of the subdirectories components.
 
-```python
-import platform
+For example in the comp1 configuration we do not want code from comp2:
 
-if 'Linux' in platform.platform():
-    from sqs_service import send_message_to_queue
-else:
-    from .sqs_service import send_message_to_queue
+```json
+        "exclude": [
+            "comp2"
+        ]
 
 ```
-
-It is my understanding that Zappa will 'zip' everything in directory, unless excluded so any shared files will need to be in each subdirectory from the parent.  For example *sqs_service.py*
-

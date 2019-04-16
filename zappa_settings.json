@@ -11,17 +11,17 @@
         "xray_tracing": true,
         "events": [
             {
-                "function": "RecurringEvents.recurring_event_handler",
+                "function": "comp1.RecurringEvents.recurring_event_handler",
                 "kwargs": {"key1": "value1", "key2": "value2"},
                 "expression": "rate(1 minute)"
             },
             {
-                "function": "RecurringEvents.every_2_mins",
+                "function": "comp1.RecurringEvents.every_2_mins",
                 "kwargs": {"queuename": "zappa-test-queue", "key2": "value2"},
                 "expression": "rate(2 minutes)"
             },
             {
-                "function": "SqsSubscriber.sqs_listener",
+                "function": "comp1.SqsSubscriberComp1.sqs_listener",
                 "event_source": {
                     "arn":  "arn:aws:sqs:us-east-1:485071734737:zappa-test-queue",
                     "batch_size": 1,
@@ -34,7 +34,6 @@
         "log_level": "ERROR",
         "exclude": [
             "comp2"
-
         ]
     },
     "comp2": {
@@ -49,17 +48,17 @@
         "xray_tracing": true,
         "events": [
             {
-                "function": "RecurringEvents.recurring_event_handler",
+                "function": "comp2.RecurringEvents.recurring_event_handler",
                 "kwargs": {"key1": "value1", "key2": "value2"},
                 "expression": "rate(1 minute)"
             },
             {
-                "function": "RecurringEvents.every_2_mins",
+                "function": "comp2.RecurringEvents.every_2_mins",
                 "kwargs": {"queuename": "TestMySQSLambda", "key2": "my value 2"},
                 "expression": "rate(2 minutes)"
             },
             {
-                "function": "SqsSubscriber.sqs_listener",
+                "function": "comp2.SqsSubscriberComp2.sqs_listener",
                 "event_source": {
                     "arn":  "arn:aws:sqs:us-east-1:485071734737:TestMySQSLambda",
                     "batch_size": 1,

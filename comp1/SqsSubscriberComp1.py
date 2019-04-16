@@ -30,7 +30,7 @@ logger.setLevel(logging.DEBUG)
 
 
 def sqs_listener(event, context):
-    print("SqsSubscriber.sqs_listener")
+    print("***COMP1:  SqsSubscriber.sqs_listener")
     print(f"event: {event}")
     print(f"context: {context}")
     print(f"Message Body: {event['Records'][0]['body']}")

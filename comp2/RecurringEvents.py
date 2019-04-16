@@ -1,13 +1,10 @@
 import boto3
 import platform
 
-if 'Linux' in platform.platform():
-    from sqs_service import send_message_to_queue
-else:
-    from .sqs_service import send_message_to_queue
+from sqs_service import send_message_to_queue
 
 def recurring_event_handler(event, context):
-    print("**** RecurringEvents.recurring_event_handler")
+    print("**** COMP2:  RecurringEvents.recurring_event_handler")
     my_kwargs = event.get('kwargs')
     print(f"***** kwargs: {my_kwargs}")
 
@@ -15,7 +12,7 @@ def recurring_event_handler(event, context):
 
 
 def every_2_mins(event, context):
-    print("**** RecurringEvents.every_2_mins")
+    print("**** COMP2:  RecurringEvents.every_2_mins")
     my_kwargs = event.get('kwargs')
     print(f"***** kwargs: {my_kwargs}")
     queue_name = my_kwargs['queuename']
