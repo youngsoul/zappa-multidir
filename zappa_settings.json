@@ -1,0 +1,77 @@
+{
+        "comp1": {
+        "aws_region": "us-east-1",
+        "profile_name": "spr",
+        "project_name": "comp1",
+        "runtime": "python3.6",
+        "s3_bucket": "pryan-zappa-deployments",
+        "timeout_seconds": 120,
+        "memory_size": 1024,
+        "use_apigateway": false,
+        "xray_tracing": true,
+        "events": [
+            {
+                "function": "RecurringEvents.recurring_event_handler",
+                "kwargs": {"key1": "value1", "key2": "value2"},
+                "expression": "rate(1 minute)"
+            },
+            {
+                "function": "RecurringEvents.every_2_mins",
+                "kwargs": {"queuename": "zappa-test-queue", "key2": "value2"},
+                "expression": "rate(2 minutes)"
+            },
+            {
+                "function": "SqsSubscriber.sqs_listener",
+                "event_source": {
+                    "arn":  "arn:aws:sqs:us-east-1:485071734737:zappa-test-queue",
+                    "batch_size": 1,
+                    "enabled": true
+                }
+            }
+
+        ],
+        "delete_s3_zip": false,
+        "log_level": "ERROR",
+        "exclude": [
+            "comp2"
+
+        ]
+    },
+    "comp2": {
+        "aws_region": "us-east-1",
+        "profile_name": "spr",
+        "project_name": "comp2",
+        "runtime": "python3.6",
+        "s3_bucket": "pryan-zappa-deployments",
+        "timeout_seconds": 120,
+        "memory_size": 1024,
+        "use_apigateway": false,
+        "xray_tracing": true,
+        "events": [
+            {
+                "function": "RecurringEvents.recurring_event_handler",
+                "kwargs": {"key1": "value1", "key2": "value2"},
+                "expression": "rate(1 minute)"
+            },
+            {
+                "function": "RecurringEvents.every_2_mins",
+                "kwargs": {"queuename": "TestMySQSLambda", "key2": "my value 2"},
+                "expression": "rate(2 minutes)"
+            },
+            {
+                "function": "SqsSubscriber.sqs_listener",
+                "event_source": {
+                    "arn":  "arn:aws:sqs:us-east-1:485071734737:TestMySQSLambda",
+                    "batch_size": 1,
+                    "enabled": true
+                }
+            }
+
+        ],
+        "delete_s3_zip": false,
+        "log_level": "ERROR",
+        "exclude": [
+            "comp1"
+        ]
+    }
+}
