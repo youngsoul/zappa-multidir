@@ -2,6 +2,8 @@ import logging
 logging.basicConfig()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+import paramiko
+from .sftp_client import test_sftp
 
 """
 {'Records': 
@@ -37,5 +39,7 @@ def sqs_listener(event, context):
     if 'messageAttributes' in event['Records'][0]:
         print(f"Message Attributes: {event['Records'][0]['messageAttributes']}")
 
+    results = test_sftp()
+    print(f"*** SFTP results: {results}")
 
     return "Done"

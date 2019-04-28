@@ -186,3 +186,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+/aws_venv/
+/set_aws_environ_variables.sh
+/env_setup.sh

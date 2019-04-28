@@ -1,22 +1,27 @@
-# Zappa with subdirectories for deployable components
+# Zappa and Docker Example
 
-Repo to show how to break up zappa code and settings across directories with a zappa_settings instead of multiple repos.
+This repo shows how to use docker with zappa to deploy multiple lambdas that have dependencies on third party libraries that need to be built in the AWS Linux Python 3.6 environment.
 
-## Setup
 
-`pip install zappa`
+## Environment Variables
+export AWS_SECRET_ACCESS_KEY=
+export AWS_ACCESS_KEY_ID=
+export AWS_DEFAULT_REGION=us-east-1
 
-## Comp1 build
+## Docker
+execute: `run_aws_docker.sh`
 
-`zappa deploy comp1`
+## In Docker shell
 
-`zappa undeploy -f comp1`
+python -m venv aws_venv
 
-## Comp2 build
+source aws_venv/bin/activate
 
-`zappa deploy comp2`
+## Install libraries
+pip install -r aws_requirements.txt
 
-`zappa undeploy -f comp2`
+## Zappa
+zappa deploy comp1
 
 ## Tricky part
 
@@ -30,3 +35,11 @@ For example in the comp1 configuration we do not want code from comp2:
         ]
 
 ```
+
+## Test SFTP Server
+Part of the this sample app is to see that we can pull in Paramiko which is a library
+that needs to be build for the AWS Linux environment.
+
+To do that comp1.SqsSubcriberComp1.py connects to the test SFTP server.
+
+https://www.wftpserver.com/onlinedemo.htm
